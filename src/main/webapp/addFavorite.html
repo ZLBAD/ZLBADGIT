@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript" src="js/jquery-1.9.1.js"></script>
+</head>
+<body>
+	<h1>搜索</h1>
+	<form id="addform">
+		名称:<input type="text" name="name" id="name"/><br />
+		链接:<input type="text" name="url" id="url" value="http://"/><br />
+		tag:<input type="text" name="tag" id="tag"/><br />
+		<span style="color:green; font-size:10px;margin-left:40px;">可以多个，用','分隔开</span><br />
+		描述:<input type="text" name="desc" id=desc/><br />
+		<input type="reset" class="btn" value="取消" />
+		<input type="button" class="btn" value="添加" onclick="addFav()"/>
+  	</form>
+</body>
+</html>
+<script text="text/javascript">
+function addFav(){
+	var label=$("#name").val();
+	if(label=="" || label==null){
+		alert("名称不能为空");
+		return;
+	}
+	var url=$("#url").val();
+	var tags=$("#tag").val();
+	var desc=$("#desc").val();
+	$.ajax({
+		url:"fav.action",
+		data:"op=addFav&label="+flabel+"&url="+furl+"&tags="+ftags+"&desc="+fdesc,
+		type:"POST",
+		dataType:"json",
+		success:function(data){
+			if(data.code==1){
+				alert("添加成功");
+				window.close();
+				window.opener.location.href="index.jsp";
+			}else{
+				alert("出错了");
+			}	
+		}
+	});
+}
+</script>

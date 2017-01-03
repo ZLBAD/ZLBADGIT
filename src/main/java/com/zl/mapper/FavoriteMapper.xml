@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zl.mapper.FavoriteMapper">
+  
+	<select id="searchfavorite" resultMap="Favoritemapper">
+		select * from favorite
+	</select>
+	 
+	<select id="selectFavoriteOne" resultMap="Favoritemapper" parameterType="String">
+		select * from favorite
+		<where>
+			<if test="_parameter!=null and _parameter!='' ">
+				f_tags like #{_parameter}
+			</if>
+		</where>
+	</select>
+	
+	<insert id="addFavorite" parameterType="Favorite">
+		insert into favorite(f_label,f_url,f_tags,f_desc) values(#{flabel},#{furl},#{ftags},#{fdesc});
+	</insert>
+	
+	<resultMap id="Favoritemapper" type="Favorite" >
+		<id property="fid" column="f_id" />
+		<result property="flabel" column="f_label" />
+		<result property="furl" column="f_url" />
+		<result property="ftags" column="f_tags" />
+		<result property="fdesc" column="f_desc" />
+	</resultMap>
+	
+</mapper>
